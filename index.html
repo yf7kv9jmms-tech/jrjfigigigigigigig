@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larken Code - Custom Web Design & Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1551187584-21e3e2b9d4f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Scroll Animation Base Classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-animate.from-left {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        .scroll-animate.from-right {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        .scroll-animate.from-bottom {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover .feature-image {
+            transform: scale(1.1);
+        }
+
+        .feature-content {
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-header {
+            padding: 2rem 1.5rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+        }
+
+        .service-icon {
+            position: relative;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            z-index: 1;
+        }
+
+        .service-title {
+            position: relative;
+            font-size: 1.4rem;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .service-body {
+            padding: 1.5rem;
+        }
+
+        .service-body p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .service-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .service-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(37, 99, 235, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            padding: 1.8rem;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .portfolio-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Contact */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .info-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover .info-icon {
+            transform: scale(1.2);
+        }
+
+        .info-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .info-item p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            color: var(--light);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0;
+        }
+
+        .loaded {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-tabs {
+                gap: 1rem;
+            }
+
+            .tab-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Prefers reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-animate {
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Error state for debugging */
+        .js-error {
+            border: 2px solid red !important;
+            background: rgba(255, 0, 0, 0.1) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">LARKEN CODE</a>
+            <nav>
+                <ul class="nav-tabs">
+                    <li><button class="tab-btn active" data-tab="home">Home</button></li>
+                    <li><button class="tab-btn" data-tab="about">About</button></li>
+                    <li><button class="tab-btn" data-tab="services">Services</button></li>
+                    <li><button class="tab-btn" data-tab="portfolio">Portfolio</button></li>
+                    <li><button class="tab-btn" data-tab="contact">Contact</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Tab -->
+        <section class="tab-content active" id="home">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>We Build Websites That Convert</h1>
+                    <p>Custom web design & development tailored to your business goals. No templates, no compromises—just results-driven digital solutions.</p>
+                    <button class="cta-button" onclick="switchTab('contact')">Get Your Free Quote</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title scroll-animate">Why Choose Larken Code?</h2>
+                <p class="section-subtitle scroll-animate">Professional web solutions designed to grow your business</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card scroll-animate from-bottom">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Fast rocket launch representing quick website turnaround" class="feature-image">
+                        <div class="feature-content">
+                            <div class="feature-icon">⚡</div>
+                            <h3>Fast Turnaround</h3>
+                            <p>Get your custom website launched quickly without sacrificing quality. Most projects complete in 2-4 weeks.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-animate from-bottom" style="animation-delay: 0.1s;">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Business growth chart on a computer screen" class="feature-image">
+                        <div class="feature-content">
+                            <div class="feature-icon">📊</div>
+                            <h3>Conversion Focused</h3>
+                            <p>Every design decision is made with your business goals in mind. We build sites that turn visitors into customers.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-animate from-bottom" style="animation-delay: 0.2s;">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional workspace with laptop and code on screen" class="feature-image">
+                        <div class="feature-content">
+                            <div class="feature-icon">✓</div>
+                            <h3>Fully Managed</h3>
+                            <p>Hosting, maintenance, updates, and support—all included. Focus on your business while we handle the tech.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-animate from-bottom" style="animation-delay: 0.3s;">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mobile devices showing responsive web design" class="feature-image">
+                        <div class="feature-content">
+                            <div class="feature-icon">◉</div>
+                            <h3>Mobile First</h3>
+                            <p>Your website will look and perform flawlessly on every device, ensuring no missed opportunities.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-animate from-bottom" style="animation-delay: 0.4s;">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SEO optimization concept with analytics" class="feature-image">
+                        <div class="feature-content">
+                            <div class="feature-icon">🔍</div>
+                            <h3>SEO Optimized</h3>
+                            <p>Built with search engine best practices from day one. Get found by the customers searching for you.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-animate from-bottom" style="animation-delay: 0.5s;">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Security shield protection concept" class="feature-image">
+                        <div class="feature-content">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Secure & Reliable</h3>
+                            <p>Enterprise-grade security, daily backups, and 99.9% uptime guarantee. Your site is always protected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Tab -->
+        <section class="tab-content" id="about">
+            <div class="section">
+                <div class="about-content">
+                    <div class="about-text scroll-animate from-left">
+                        <h2>Your Business Deserves Better Than a Template</h2>
+                        <p>I'm Larken, a full-stack developer with a mission to help small businesses compete online with custom websites that actually deliver results.</p>
+                        <p>After seeing too many businesses struggle with cookie-cutter templates and overpriced agencies, I started Larken Code to provide a better alternative—professional, custom web design that's affordable and actually drives growth.</p>
+                        <p>Every site I build is hand-coded from scratch, optimized for speed and conversions, and comes with full ongoing support so you never have to worry about the technical stuff.</p>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item scroll-animate from-bottom">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Websites Built</span>
+                            </div>
+                            <div class="stat-item scroll-animate from-bottom" style="animation-delay: 0.1s;">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Client Satisfaction</span>
+                            </div>
+                            <div class="stat-item scroll-animate from-bottom" style="animation-delay: 0.2s;">
+                                <span class="stat-number">24/7</span>
+                                <span class="stat-label">Support Available</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image scroll-animate from-right">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional developer working on code">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Tab -->
+        <section class="tab-content" id="services">
+            <div class="section">
+                <h2 class="section-title scroll-animate">All-Inclusive Web Design Packages</h2>
+                <p class="section-subtitle scroll-animate">Everything you need to succeed online—no hidden fees, no upsells, no surprises</p>
+                
+                <div class="services-grid">
+                    <div class="service-card scroll-animate from-bottom">
+                        <div class="service-header">
+                            <div class="service-icon">1</div>
+                            <div class="service-title">Starter Business</div>
+                        </div>
+                        <div class="service-body">
+                            <p>Perfect for new businesses ready to establish their online presence.</p>
+                            <ul class="service-features">
+                                <li>Custom 5-page website</li>
+                                <li>Mobile responsive design</li>
+                                <li>Contact forms & maps</li>
+                                <li>Basic SEO setup</li>
+                                <li>Free domain & hosting (1 year)</li>
+                                <li>Monthly maintenance</li>
+                            </ul>
+                            <div class="service-price">$899</div>
+                        </div>
+                    </div>
+                    <div class="service-card scroll-animate from-bottom" style="animation-delay: 0.1s;">
+                        <div class="service-header">
+                            <div class="service-icon">2</div>
+                            <div class="service-title">E-Commerce Pro</div>
+                        </div>
+                        <div class="service-body">
+                            <p>Complete online store solution to start selling fast.</p>
+                            <ul class="service-features">
+                                <li>Full online store setup</li>
+                                <li>Payment integration</li>
+                                <li>Product catalog (up to 50)</li>
+                                <li>Inventory management</li>
+                                <li>SSL certificate included</li>
+                                <li>24/7 support</li>
+                            </ul>
+                            <div class="service-price">$1,499</div>
+                        </div>
+                    </div>
+                    <div class="service-card scroll-animate from-bottom" style="animation-delay: 0.2s;">
+                        <div class="service-header">
+                            <div class="service-icon">3</div>
+                            <div class="service-title">Growth Accelerator</div>
+                        </div>
+                        <div class="service-body">
+                            <p>Maximum performance and conversions for serious businesses.</p>
+                            <ul class="service-features">
+                                <li>Unlimited pages</li>
+                                <li>Advanced animations</li>
+                                <li>Premium SEO & analytics</li>
+                                <li>Blog setup included</li>
+                                <li>Speed optimization</li>
+                                <li>Conversion tracking</li>
+                            </ul>
+                            <div class="service-price">$2,299</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Tab -->
+        <section class="tab-content" id="portfolio">
+            <div class="section">
+                <h2 class="section-title scroll-animate">Recent Projects</h2>
+                <p class="section-subtitle scroll-animate">See how we've helped businesses like yours succeed online</p>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-item scroll-animate from-bottom">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Construction and roofing company website design">
+                            <div class="portfolio-overlay">
+                                <button class="cta-button">View Case Study</button>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Local Roofing Company</h3>
+                            <p>Increased leads by 300% with a conversion-optimized website and local SEO strategy.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Lead Generation</span>
+                                <span class="tag">Local SEO</span>
+                                <span class="tag">Mobile First</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-item scroll-animate from-bottom" style="animation-delay: 0.1s;">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-commerce fashion store website">
+                            <div class="portfolio-overlay">
+                                <button class="cta-button">View Case Study</button>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>E-Commerce Fashion Store</h3>
+                            <p>Built a stunning online store that processed $50K+ in sales within the first 3 months.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">WooCommerce</span>
+                                <span class="tag">Speed Optimized</span>
+                                <span class="tag">UX Design</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-item scroll-animate from-bottom" style="animation-delay: 0.2s;">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional services firm website">
+                            <div class="portfolio-overlay">
+                                <button class="cta-button">View Case Study</button>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Professional Services Firm</h3>
+                            <p>Modern redesign that positioned them as industry leaders and increased consultation requests.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Brand Positioning</span>
+                                <span class="tag">Content Strategy</span>
+                                <span class="tag">Conversion Rate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Tab -->
+        <section class="tab-content" id="contact">
+            <div class="section">
+                <h2 class="section-title scroll-animate">Ready to Launch Your New Website?</h2>
+                <p class="section-subtitle scroll-animate">Get a free, no-obligation quote in under 24 hours</p>
+                
+                <div class="contact-container scroll-animate from-bottom">
+                    <form id="contactForm" action="https://formsubmit.co/hagorgusbusiness@gmail.com" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="New Website Inquiry - Larken Code">
+                        <input type="hidden" name="_template" value="table">
+                        
+                        <div class="form-group">
+                            <label for="name">Business Name</label>
+                            <input type="text" id="name" name="Business Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Your Name</label>
+                            <input type="text" id="contact" name="Contact Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="Phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="package">Interested Package</label>
+                            <input type="text" id="package" name="Package Interest" placeholder="e.g., Starter Business, E-Commerce Pro">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tell Us About Your Project</label>
+                            <textarea id="message" name="Project Details" required placeholder="What does your business do? What are your goals for the website?"></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%;">Get My Free Quote</button>
+                    </form>
+                    
+                    <div class="contact-info">
+                        <div class="info-item scroll-animate from-bottom">
+                            <div class="info-icon">@</div>
+                            <h4>Email</h4>
+                            <p>hagorgusbusiness@gmail.com</p>
+                        </div>
+                        <div class="info-item scroll-animate from-bottom" style="animation-delay: 0.1s;">
+                            <div class="info-icon">⚡</div>
+                            <h4>Response Time</h4>
+                            <p>Within 24 Hours</p>
+                        </div>
+                        <div class="info-item scroll-animate from-bottom" style="animation-delay: 0.2s;">
+                            <div class="info-icon">✓</div>
+                            <h4>Free Quote</h4>
+                            <p>No Obligation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Larken Code. All rights reserved.</p>
+            <p>Custom web design that grows your business.</p>
+            <div class="social-links">
+                <a href="#" class="social-link">𝕏</a>
+                <a href="#" class="social-link">in</a>
+                <a href="#" class="social-link">@</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // CORE FIX: Wait for DOM to be fully loaded before running any JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('JavaScript loaded successfully');
+            
+            // Tab functionality - safe to run now
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function switchTab(tabName) {
+                console.log('Switching to tab:', tabName);
+                
+                // Hide all tab contents
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                const targetContent = document.getElementById(tabName);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                } else {
+                    console.error('Tab content not found:', tabName);
+                }
+                
+                // Add active class to clicked button
+                const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+                
+                // Scroll to top of content
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                
+                // Re-observe elements for animation after tab switch
+                setTimeout(() => {
+                    if (typeof observeElements === 'function') {
+                        observeElements();
+                    }
+                }, 100);
+            }
+
+            // Add click event to tab buttons
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // Scroll-triggered animation system
+            window.observeElements = function() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate');
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+
+                // Observe all scroll-animate elements
+                const elementsToAnimate = document.querySelectorAll('.scroll-animate');
+                elementsToAnimate.forEach(el => {
+                    el.classList.remove('animate'); // Reset animation
+                    observer.observe(el);
+                });
+
+                console.log('Observing', elementsToAnimate.length, 'elements');
+            };
+
+            // Initial observation on page load
+            setTimeout(() => {
+                observeElements();
+                
+                // Animate hero elements immediately
+                const heroElements = document.querySelectorAll('#home .scroll-animate');
+                heroElements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('animate');
+                    }, index * 100);
+                });
+            }, 300);
+
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    
+                    // Show sending state
+                    submitBtn.textContent = 'Sending...';
+                    submitBtn.disabled = true;
+                    
+                    // Submit form
+                    fetch('https://formsubmit.co/ajax/hagorgusbusiness@gmail.com', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(Object.fromEntries(new FormData(this)))
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            submitBtn.textContent = '✓ Quote Request Sent!';
+                            submitBtn.style.background = '#10b981';
+                            this.reset();
+                        } else {
+                            throw new Error('Submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        submitBtn.textContent = '✗ Error: Try Again';
+                        submitBtn.style.background = '#ef4444';
+                    })
+                    .finally(() => {
+                        setTimeout(() => {
+                            submitBtn.textContent = originalText;
+                            submitBtn.style.background = 'linear-gradient(135deg, var(--primary), var(--accent))';
+                            submitBtn.disabled = false;
+                        }, 3000);
+                    });
+                });
+            }
+
+            // Header scroll effect
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.boxShadow = 'var(--shadow)';
+                }
+                
+                lastScroll = currentScroll;
+            });
+
+            // Dynamic year in footer
+            const yearSpan = document.querySelector('footer p');
+            if (yearSpan) {
+                const currentYear = new Date().getFullYear();
+                yearSpan.innerHTML = `&copy; ${currentYear} Larken Code. All rights reserved.`;
+            }
+
+            // Add parallax effect to hero background
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.backgroundPositionY = `${-scrolled * 0.5}px`;
+                }
+            });
+        });
+
+        // Global error handler to catch any JavaScript errors
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+        });
+    </script>
+</body>
+</html>
